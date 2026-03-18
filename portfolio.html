@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alex Mercer — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #F5F0E8;
+      --ink: #1A1A18;
+      --accent: #C8412A;
+      --muted: #8A8478;
+      --rule: #D4CFC4;
+      --card-bg: #EDEAE0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      border-bottom: 2px solid var(--ink);
+      padding: 0 48px;
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      animation: slideDown 0.6s ease both;
+    }
+
+    .header-name {
+      flex: 1;
+      padding: 24px 0;
+      border-right: 2px solid var(--ink);
+    }
+
+    .header-name h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .header-name h1 em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .header-meta {
+      width: 280px;
+      padding: 24px 0 24px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .header-meta .role {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .header-meta .location {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .header-meta nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    .header-meta nav a {
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .header-meta nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .header-meta nav a:hover::after { width: 100%; }
+    .header-meta nav a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 2px solid var(--ink);
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .hero-text {
+      padding: 64px 48px;
+      border-right: 2px solid var(--ink);
+    }
+
+    .hero-text .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .hero-text p {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      line-height: 1.35;
+      color: var(--ink);
+    }
+
+    .hero-visual {
+      padding: 64px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--card-bg);
+    }
+
+    .hero-visual .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .stat {
+      border-top: 1px solid var(--rule);
+      padding-top: 12px;
+    }
+
+    .stat .num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.4rem;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .stat .label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .hero-visual .tagline {
+      font-size: 12px;
+      color: var(--muted);
+      border-top: 1px solid var(--rule);
+      padding-top: 16px;
+    }
+
+    /* ── WORK ── */
+    .section-header {
+      padding: 20px 48px;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .section-header span {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .section-header .line {
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    .works {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 2px solid var(--ink);
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+
+    .work-card {
+      padding: 36px 36px 32px;
+      border-right: 1px solid var(--rule);
+      cursor: pointer;
+      transition: background 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .work-card:last-child { border-right: none; }
+
+    .work-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+
+    .work-card:hover { background: var(--card-bg); }
+    .work-card:hover::before { transform: scaleX(1); }
+
+    .work-card .num {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 20px;
+      letter-spacing: 0.1em;
+    }
+
+    .work-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .work-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .work-card .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border: 1px solid var(--rule);
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+
+    .work-card:hover .tag {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── SKILLS ── */
+    .skills {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 2px solid var(--ink);
+      animation: fadeUp 0.7s 0.5s ease both;
+    }
+
+    .skills-left {
+      padding: 48px;
+      border-right: 2px solid var(--ink);
+    }
+
+    .skills-left h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem;
+      line-height: 1.1;
+      margin-bottom: 32px;
+    }
+
+    .skills-left h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .skill-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .skill-list li {
+      padding: 14px 0;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .skill-list li:last-child { border-bottom: 1px solid var(--rule); }
+
+    .skill-bar {
+      width: 120px;
+      height: 2px;
+      background: var(--rule);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-bar-fill {
+      position: absolute;
+      left: 0; top: 0;
+      height: 100%;
+      background: var(--accent);
+      animation: barGrow 1s 0.8s ease both;
+    }
+
+    @keyframes barGrow {
+      from { width: 0 !important; }
+    }
+
+    .skills-right {
+      padding: 48px;
+      background: var(--card-bg);
+    }
+
+    .skills-right h3 {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .exp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .exp-item .company {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+    }
+
+    .exp-item .role-title {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .exp-item .period {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-top: 4px;
+    }
+
+    /* ── CONTACT ── */
+    .contact {
+      padding: 64px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      animation: fadeUp 0.7s 0.6s ease both;
+    }
+
+    .contact-cta h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+    }
+
+    .contact-cta h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-end;
+    }
+
+    .contact-links a {
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .contact-links a:hover { color: var(--accent); }
+
+    .contact-links a .arrow {
+      font-size: 16px;
+      transition: transform 0.2s;
+    }
+
+    .contact-links a:hover .arrow { transform: translateX(4px); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 2px solid var(--ink);
+      padding: 16px 48px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      header { flex-direction: column; padding: 24px; }
+      .header-name { border-right: none; border-bottom: 1px solid var(--rule); padding-bottom: 16px; }
+      .header-meta { width: 100%; padding: 16px 0 0; }
+      .hero, .works, .skills { grid-template-columns: 1fr; }
+      .hero-text, .hero-visual, .work-card, .skills-left { border-right: none; border-bottom: 1px solid var(--rule); }
+      .skills-right { border-top: none; }
+      .contact { flex-direction: column; gap: 32px; align-items: flex-start; }
+      .contact-links { align-items: flex-start; }
+      header, .hero-text, .hero-visual, .skills-left, .skills-right, .contact { padding: 32px 24px; }
+      .section-header, footer { padding: 16px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-name">
+      <h1>Alex <em>Mercer</em></h1>
+    </div>
+    <div class="header-meta">
+      <div>
+        <div class="role">Full-Stack Designer & Developer</div>
+        <div class="location">San Francisco, CA · Open to remote</div>
+      </div>
+      <nav>
+        <a href="#work">Work</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <div class="eyebrow">About</div>
+      <p>I build interfaces that feel inevitable — products where form and function converge into something people actually enjoy using.</p>
+    </div>
+    <div class="hero-visual">
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="num">6+</div>
+          <div class="label">Years exp.</div>
+        </div>
+        <div class="stat">
+          <div class="num">40+</div>
+          <div class="label">Projects</div>
+        </div>
+        <div class="stat">
+          <div class="num">12</div>
+          <div class="label">Clients</div>
+        </div>
+        <div class="stat">
+          <div class="num">3</div>
+          <div class="label">Awards</div>
+        </div>
+      </div>
+      <div class="tagline">Currently available for new projects — Q2 2026</div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <div class="section-header" id="work">
+    <span>Selected Work</span>
+    <div class="line"></div>
+    <span>2022–2026</span>
+  </div>
+  <section class="works">
+    <div class="work-card">
+      <div class="num">01</div>
+      <h3>Orbit Design System</h3>
+      <p>A cohesive component library for a Series B fintech, reducing design-to-dev handoff time by 60%.</p>
+      <div class="tags">
+        <span class="tag">React</span>
+        <span class="tag">Figma</span>
+        <span class="tag">Storybook</span>
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="num">02</div>
+      <h3>Pulse Analytics</h3>
+      <p>Real-time dashboard for monitoring distributed infrastructure — 200ms update cycles, dark mode first.</p>
+      <div class="tags">
+        <span class="tag">TypeScript</span>
+        <span class="tag">D3.js</span>
+        <span class="tag">WebSockets</span>
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="num">03</div>
+      <h3>Verde Mobile App</h3>
+      <p>Consumer sustainability tracker with 50k+ downloads. Designed onboarding flow from 0 to launch.</p>
+      <div class="tags">
+        <span class="tag">React Native</span>
+        <span class="tag">Node.js</span>
+        <span class="tag">UX Research</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <div class="section-header" id="skills">
+    <span>Capabilities</span>
+    <div class="line"></div>
+  </div>
+  <section class="skills">
+    <div class="skills-left">
+      <h2>Craft over<br><em>convention.</em></h2>
+      <ul class="skill-list">
+        <li>
+          <span>UI/UX Design</span>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:95%"></div></div>
+        </li>
+        <li>
+          <span>React / Next.js</span>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div>
+        </li>
+        <li>
+          <span>Node.js / APIs</span>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+        </li>
+        <li>
+          <span>Motion Design</span>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+        </li>
+        <li>
+          <span>Design Systems</span>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div>
+        </li>
+      </ul>
+    </div>
+    <div class="skills-right">
+      <h3>Experience</h3>
+      <div class="exp-list">
+        <div class="exp-item">
+          <div class="company">Verve Studio</div>
+          <div class="role-title">Lead Product Designer</div>
+          <div class="period">2024 — Present</div>
+        </div>
+        <div class="exp-item">
+          <div class="company">Helio Systems</div>
+          <div class="role-title">Senior Frontend Engineer</div>
+          <div class="period">2022 — 2024</div>
+        </div>
+        <div class="exp-item">
+          <div class="company">Freelance</div>
+          <div class="role-title">Designer & Developer</div>
+          <div class="period">2020 — 2022</div>
+        </div>
+        <div class="exp-item">
+          <div class="company">RISD</div>
+          <div class="role-title">BFA Graphic Design</div>
+          <div class="period">2016 — 2020</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-cta">
+      <h2>Let's build something<br><em>worth remembering.</em></h2>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:alex@mercer.design">alex@mercer.design <span class="arrow">→</span></a>
+      <a href="#">LinkedIn <span class="arrow">→</span></a>
+      <a href="#">GitHub <span class="arrow">→</span></a>
+      <a href="#">Resume PDF <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Alex Mercer</span>
+    <span>Designed & built with care</span>
+  </footer>
+
+</body>
+</html>
